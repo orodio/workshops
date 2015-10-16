@@ -9,9 +9,6 @@ defmodule BankAccount do
       {:check_balance, pid}        -> send_balance(events, pid)
       event = {:deposit, _amount}  -> events = [event | events]
       event = {:withdraw, _amount} -> events = [event | events]
-      {:transfer, to_pid, amount}  ->
-        events = [{:withdraw, amount} | events]
-        Process.send(to_pid, {:deposit, amount}, [])
     end
     await(events)
   end
